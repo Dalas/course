@@ -1,4 +1,6 @@
-from models import Users
+from models import Users, Sessions
+
+from aiohttp.web import HTTPFound
 
 
 ROLE_STUDENT = "ROLE_STUDENT"
@@ -14,22 +16,21 @@ AVAILABLE_PATHS = {
 
 
 def is_authenticated(available_role=None):
-    def method_wrapper(method):
+    def method_wrapper(func):
         async def wrapper(request, *args, **kwargs):
-            token = self.get_secure_cookie('token')
+            token = request.cookies.get('token', None)
 
-            if not token:
-                return self.redirect('/login')
+            if token:
+                session = await Sessions.get(request.app['db'], {'token': token})
+                # TODO: refactor this
+                if session:
+                    request.session = session
+                else:
+                    return HTTPFound('/')
+            else:
+                return HTTPFound('/')
 
-            self.current_user = await Users.find_by_session_token(token.decode('utf-8'))
-
-            if not self.current_user:
-                return self.redirect('/login')
-
-            if available_role and self.current_user['role'] != available_role:
-                return self.redirect(AVAILABLE_PATHS[self.current_user['role']])
-
-            return method(request, *args, **kwargs)
+            return await func(request, *args, **kwargs)
 
         return wrapper
 

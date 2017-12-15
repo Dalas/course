@@ -72,6 +72,40 @@ paths:
           schema:
             $ref: '#/definitions/ApiErrorResponse'
 
+  /v1/storehouse:
+    get:
+      tags:
+        - StoreHouse
+      description: |
+        Get all storehouses
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+#        - name: body
+#          in: body
+#          description: Users data
+#          required: true
+#          schema:
+#            $ref: '#/definitions/StoreHouseObject'
+      responses:
+        200:
+          description: User successfully created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StoreHouseObject'
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+
 definitions:
 
   ApiError:
@@ -118,3 +152,12 @@ definitions:
         type: string
       password:
         type: string
+
+  StoreHouseObject:
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      capacity:
+        tipe: number
