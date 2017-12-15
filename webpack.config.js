@@ -9,12 +9,9 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     context: path.join(__dirname, "static/"),
     entry: {
-        styles_loader: "./js/src/pages/styles.loader.js",
         registrationPage: "./js/src/pages/registrationPage.js",
 
-        themesPage: "./js/src/pages/themesPage.js",
-        attendancePage: "./js/src/pages/attendancePage.js",
-        usersPage: "./js/src/pages/usersPage.js",
+        styles_loader: "./js/src/pages/styles.loader.js",
         vendor: ['react', 'react-dom', 'isomorphic-fetch', 'redux', 'react-redux', 'lodash', 'react-jsonschema-form']
     },
     output: {

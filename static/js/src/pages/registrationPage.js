@@ -5,8 +5,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import fetch from 'isomorphic-fetch';
-import UsersListComponent from '../components/users/usersListComponent.js';
-import EditComponent from '../components/editComponent.js';
 
 
 const roles = ["ROLE_ADMIN", "ROLE_STUDENT"];
@@ -38,53 +36,33 @@ class UsersPage extends React.Component {
     constructor( props ) {
         super(props);
 
-        // this.handleEditingFinish = this.handleEditingFinish.bind(this);
-        // this.createNewUser = this.createNewUser.bind(this);
-        // this.fetchUsers = this.fetchUsers.bind(this);
-        // this.deleteUser = this.deleteUser.bind(this);
-        // this.createUser = this.createUser.bind(this);
-        // this.updateUser = this.updateUser.bind(this);
-        // this.selectUser = this.selectUser.bind(this);
-
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleRegistration = this.handleRegistration.bind(this);
+        this.validate = this.validate.bind(this);
 
         this.state = {
             form: { ...USERS_SCHEMA, confirm_password: '' },
             errors: { ...USERS_SCHEMA },
-            serverError: ''
+            serverError: '',
+            fetching: true
         };
-
-        this.fetchUsers()
     }
 
     createUser(user) {
-        fetch('/api/v1/users', {
+        fetch('/api/user', {
             method: 'POST',
             credentials: 'same-origin',
-            body: JSON.stringify({ user: user})
+            body: JSON.stringify( user )
         }).then( response => {
             if (response.status >= 400) {
                 throw XMLHttpRequestException('Something went wrong while fetching themes!')
             }
             else {
                 response.json().then(data => {
-                    this.state.users.push(data);
-                    this.setState({});
+                    console.log(data)
                 });
             }
         }).catch( error => console.log(error) )
-    }
-
-    handleEditingFinish(form) {
-        let user = form.formData;
-
-        if ( this.state.currentUserID != -1 ) {
-            user._id = this.state.users[this.state.currentUserID]._id;
-            this.updateUser(user);
-        }
-        else {
-            this.createUser(user);
-        }
     }
 
     selectUser(id) {
@@ -94,17 +72,40 @@ class UsersPage extends React.Component {
         })
     }
 
-    createNewUser() {
-        this.setState({
-            currentUser: false,
-            currentUserID: -1
-        })
+    handleRegistration(event) {
+        event.preventDefault();
+
+        if( this.validate() ) {
+            this.createUser(this.state.form);
+        }
     }
 
     handleEdit(event) {
-        let id = event.target.id;
+        this.setState({
+           form: {
+               ...this.state.form,
+               [event.target.id]: event.target.value
+           }
+        });
+    }
 
-        console.log(id)
+    validate() {
+        let errors = { ...USERS_SCHEMA };
+
+        if( !this.state.form.login )
+            errors.login = 'Login required';
+
+        if( this.state.form.password != this.state.form.confirm_password )
+            errors.password = 'Password missmatch';
+
+        if( !this.state.form.password )
+            errors.password = 'Password required';
+
+        this.setState({
+            errors: errors
+        });
+
+        return !!errors
     }
 
     render() {
@@ -116,8 +117,9 @@ class UsersPage extends React.Component {
 
                     <div className="form-group">
                         <label className="col-md-4 control-label" htmlFor="login">Login</label>
+                        <p>{ this.state.errors.login }</p>
                         <div className="col-md-4">
-                            <input id="name" name="login" type="text" placeholder="Enter your login" className="form-control input-md"
+                            <input id="login" name="login" type="text" placeholder="Enter your login" className="form-control input-md"
                                    required="true" onChange={ this.handleEdit } />
 
                         </div>
@@ -125,6 +127,7 @@ class UsersPage extends React.Component {
 
                     <div className="form-group">
                         <label className="col-md-4 control-label" htmlFor="password">Password</label>
+                        <p>{ this.state.errors.password }</p>
                         <div className="col-md-4">
                             <input id="password" name="password" type="password" placeholder="Enter a password"
                                    className="form-control input-md" required="true" onChange={ this.handleEdit } />
@@ -143,7 +146,8 @@ class UsersPage extends React.Component {
 
                     <div className="form-group">
                         <div className="col-md-4">
-                            <button id="signup" name="signup" className="btn btn-success">Sign Up</button>
+                            <button id="signup" name="signup" className="btn btn-success"
+                                    onClick={ this.handleRegistration }>Sign Up</button>
                         </div>
                     </div>
 
@@ -154,6 +158,3 @@ class UsersPage extends React.Component {
 }
 
 ReactDOM.render(<UsersPage />, document.getElementById('container'));
-/**
- * Created by yura on 15.12.17.
- */

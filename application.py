@@ -24,7 +24,7 @@ def create_app():
     setup_db(app)
 
     jinja2_setup(app, loader=jinja2.FileSystemLoader('./templates'))
-    # setup_swagger(app, swagger_from_file=os.path.join(os.path.dirname(__file__), 'api.yaml'))
+    setup_swagger(app, swagger_from_file=os.path.join(os.path.dirname(__file__), 'api.yaml'))
 
     return app
 

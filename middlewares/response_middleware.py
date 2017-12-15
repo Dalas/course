@@ -1,4 +1,4 @@
-from exceptions import BaseResponseException
+from exceptions import BaseApiException
 
 from aiohttp.web import Response, FileResponse, json_response
 
@@ -15,7 +15,7 @@ async def response_middleware(app, handler):
                 data, status = response
                 return json_response({'data': data, 'error': {}}, status=status)
 
-        except BaseResponseException as e:
+        except BaseApiException as e:
             return json_response({'data': {}, 'error': e.error}, status=e.status)
 
         # TODO: use only for debug
