@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: Swagger Petstore
+  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification
+host: petstore.swagger.io
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /api/github-callback:
+    get:
+      tags:
+        - Authentication
+      description: |
+        GitHub authentication api callback url
+      parameters:
+        - name: code
+          in: query
+          description: Code returned by gitHub
+          required: true
+          type: string
+      responses:
+        '301':
+          description: Successfull login
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        '503':
+          description: External server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+
+  /api/repositories:
+    get:
+      tags:
+        - GitHub Api
+      description: |
+        Return current users GitHub repositories
+      parameters:
+        - name: token
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: List of users Github repositories
+          type: array
+          items:
+            $ref: '#/definitions/GitHubRepo'
+
+  /api/chat:
+    get:
+      tags:
+        - Chat Api
+      description: |
+        Return current users chats
+    post:
+      description: Creates a new pet in the store.  Duplicates are allowed
+      parameters:
+        - name: token
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: List of users Github repositories
+          type: array
+          items:
+            $ref: '#/definitions/GitHubRepo'
+    post:
+
+definitions:
+
+  ApiError:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+
+  ApiErrorResponse:
+    required:
+      - error
+      - data
+    properties:
+      error:
+        type: object
+        schema:
+          $ref: '#/definitions/ApiError'
+      data:
+        type: object
+
+  GitHubRepo:
+    properties:
+      name:
+        type: string

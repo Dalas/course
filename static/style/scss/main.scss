@@ -1,0 +1,130 @@
+
+@import "bootstrap.scss";
+@import "loader.scss";
+
+ul {
+  margin-top: 0;
+}
+
+body {
+  height: 100vh;
+}
+
+.align-middle {
+  vertical-align: middle !important;
+}
+
+.center-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disable-float {
+  float: none;
+}
+
+.margin-bottom-sm-1 {
+  margin-bottom: 10vh;
+}
+
+.margin-top-sm-1 {
+  margin-top: 5vh;
+}
+
+.padding-top-sm-1 {
+  padding-top: 10vh;
+}
+
+.teams-list {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.create-team-button {
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+.my-label {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 0.66em;
+}
+
+.users-preview-list {
+  position: absolute;
+
+  li {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #9b9b9b;
+    }
+  }
+}
+
+.errors-container {
+  min-height: 0;
+  transition: min-height 500ms ease-out 0.5s;
+}
+
+
+/*.flex-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  min-height: auto;
+  padding: 10px;
+}
+
+.message, .my-message {
+  margin: 1em 0;
+  padding: 0.1em;
+  font-size: 0.8em;
+  list-style: none;
+  border-radius: 0.5em;
+
+  &>p {
+    margin: 0.1em 0;
+  }
+}
+
+.my-message {
+  text-align: right;
+  background-color: #eaeaff;
+}
+
+.chat-container {
+  height: 80%;
+
+  & > div {
+    height: 85vh;
+
+    .messages-container {
+      height: 40vh;
+      overflow-y: scroll;
+    }
+  }
+}
+
+.new-message-container {
+
+  textarea {
+    width: 33vw;
+    resize: none;
+  }
+
+  button {
+    margin-top: 1vh;
+  }
+}*/
+
+.border-box {
+  box-sizing: border-box;
+}

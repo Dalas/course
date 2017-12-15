@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Default title{% endblock %}</title>
+
+    <link rel="stylesheet" href="/static/style/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/style/styles.css">
+
+    <script src="/static/js/build/vendor.js"></script>
+</head>
+    <body>
+        <div id="container">
+            {% block body %}Default body{% endblock %}
+        </div>
+
+        {% block bottom_scripts %}{% endblock %}
+    </body>
+</html>
