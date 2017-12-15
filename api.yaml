@@ -38,6 +38,40 @@ paths:
           schema:
             $ref: '#/definitions/ApiErrorResponse'
 
+  /v1/login:
+    post:
+      tags:
+        - Registration
+        - Users
+      description: |
+        Register new user
+      parameters:
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        201:
+          description: User successfully created
+          schema:
+            properties:
+              token:
+                type: string
+        403:
+          description: Invalid login or password
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+
 definitions:
 
   ApiError:
@@ -74,4 +108,13 @@ definitions:
       password:
         type: string
       confirm_password:
+        type: string
+  LoginRequest:
+    required:
+      - login
+      - password
+    properties:
+      login:
+        type: string
+      password:
         type: string

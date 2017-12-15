@@ -54,3 +54,4 @@ async def validate(request, schema, required_all=True):
 
 
 create_user_request_validator = functools.partial(validate, schema=schemas.create_user_request_schema)
+login_request_validator = functools.partial(validate, schema=schemas.login_request_schema)

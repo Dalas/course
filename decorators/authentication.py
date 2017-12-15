@@ -15,7 +15,7 @@ AVAILABLE_PATHS = {
 
 def is_authenticated(available_role=None):
     def method_wrapper(method):
-        async def wrapper(self, *args, **kwargs):
+        async def wrapper(request, *args, **kwargs):
             token = self.get_secure_cookie('token')
 
             if not token:
@@ -26,10 +26,10 @@ def is_authenticated(available_role=None):
             if not self.current_user:
                 return self.redirect('/login')
 
-            if available_role and  self.current_user['role'] != available_role:
+            if available_role and self.current_user['role'] != available_role:
                 return self.redirect(AVAILABLE_PATHS[self.current_user['role']])
 
-            return method(self, *args, **kwargs)
+            return method(request, *args, **kwargs)
 
         return wrapper
 

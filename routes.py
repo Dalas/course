@@ -11,6 +11,7 @@ def register_routes(app):
     app.router.add_get('/register', web.registration_handler, name='registration-route')
     app.router.add_get('/login', web.login_handler, name='login-route')
     # Api
+    app.router.add_post('/api/v1/login', api.login_handler, name='login-api-route')
     app.router.add_post('/api/v1/user', api.registration_handler, name='registration-api-route')
 
     #

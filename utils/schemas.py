@@ -23,3 +23,4 @@ def get_schema(name):
 
 
 create_user_request_schema = get_schema('CreateUserRequest')
+login_request_schema = get_schema('LoginRequest')
