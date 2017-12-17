@@ -7,8 +7,7 @@ import logging
 import jsonschema
 
 from utils import schemas
-
-# import exceptions
+from exceptions import ValidationError
 
 
 logger = logging.getLogger(__name__)
@@ -44,14 +43,14 @@ async def validate(request, schema, required_all=True):
 
             errors = validate_schema(body, schema)
             if errors:
-                raise BaseException()
-                # raise api_errors.ValidationError(message=errors)
+                raise ValidationError()
         return body
     except json.JSONDecodeError as e:
         logger.exception('Bad json, got exception %s', e)
-        raise BaseException()
-        # raise api_errors.ValidationError(message='Content type application/json is required')
+        raise ValidationError()
 
 
 create_user_request_validator = functools.partial(validate, schema=schemas.create_user_request_schema)
 login_request_validator = functools.partial(validate, schema=schemas.login_request_schema)
+create_storehouse_request_validator = functools.partial(validate, schema=schemas.create_storehouse_request_schema)
+delete_storehouse_request_validator = functools.partial(validate, schema=schemas.delete_storehouse_request_schema)

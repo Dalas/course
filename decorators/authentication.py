@@ -1,6 +1,7 @@
-from models import Users, Sessions
+from bson import ObjectId
 
-from aiohttp.web import HTTPFound
+from models import Users, Sessions
+from exceptions import LoginRequiredException
 
 
 ROLE_STUDENT = "ROLE_STUDENT"
@@ -18,17 +19,24 @@ AVAILABLE_PATHS = {
 def is_authenticated(available_role=None):
     def method_wrapper(func):
         async def wrapper(request, *args, **kwargs):
-            token = request.cookies.get('token', None)
+            token = request.headers.get('token', None)
 
             if token:
-                session = await Sessions.get(request.app['db'], {'token': token})
-                # TODO: refactor this
-                if session:
-                    request.session = session
-                else:
-                    return HTTPFound('/')
+                db = request.app['db']
+
+                session = await Sessions.get(db, {'token': token})
+
+                if not session:
+                    raise LoginRequiredException()
+
+                user = await Users.get(db, {'_id': ObjectId(session['user_id'])})
+
+                if not user:
+                    raise LoginRequiredException()
+
+                request.user = user
             else:
-                return HTTPFound('/')
+                raise LoginRequiredException()
 
             return await func(request, *args, **kwargs)
 

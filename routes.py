@@ -14,9 +14,7 @@ def register_routes(app):
     app.router.add_post('/api/v1/login', api.login_handler, name='login-api-route')
     app.router.add_post('/api/v1/user', api.registration_handler, name='registration-api-route')
 
-    #
-    # # Repositories
-    # app.router.add_get('/api/repositories', views.my_repositories, name='my-repositories')
-    #
-    # # Users
-    # app.router.add_get('/api/users/me', views.get_me, name='my-profile')
+    # Storehouses
+    app.router.add_get('/api/v1/storehouses', api.get_store_houses_handler, name='get-storehouses')
+    app.router.add_post('/api/v1/storehouse', api.create_store_house_handler, name='create-storehouses')
+    app.router.add_delete('/api/v1/storehouse', api.delete_store_house_handler, name='delete-storehouses')

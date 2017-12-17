@@ -72,7 +72,7 @@ paths:
           schema:
             $ref: '#/definitions/ApiErrorResponse'
 
-  /v1/storehouse:
+  /v1/storehouses:
     get:
       tags:
         - StoreHouse
@@ -84,12 +84,6 @@ paths:
           description: Authorization token
           required: true
           type: string
-#        - name: body
-#          in: body
-#          description: Users data
-#          required: true
-#          schema:
-#            $ref: '#/definitions/StoreHouseObject'
       responses:
         200:
           description: User successfully created
@@ -97,6 +91,63 @@ paths:
             type: array
             items:
               $ref: '#/definitions/StoreHouseObject'
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+  /v1/storehouse:
+    post:
+      tags:
+        - StoreHouse
+      description: |
+        Create storehouse
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/CreateStoreHouseObject'
+      responses:
+        201:
+          description: Storehouse successfully created
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+    delete:
+      tags:
+        - StoreHouse
+      description: |
+        Delete storehouse
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteStoreHouseObject'
+      responses:
+        204:
+          description: Storehouse successfully deleted
         403:
           description: Login required
           schema:
@@ -160,4 +211,21 @@ definitions:
       title:
         type: string
       capacity:
-        tipe: number
+        type: number
+      used_space:
+        type: number
+  CreateStoreHouseObject:
+    required:
+      - title
+      - capacity
+    properties:
+      title:
+        type: string
+      capacity:
+        type: number
+  DeleteStoreHouseObject:
+    required:
+      - storehouse_id
+    properties:
+      storehouse_id:
+        type: string

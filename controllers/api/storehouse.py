@@ -1,41 +1,30 @@
 from utils import validators
 from models import StoreHouses
-from exceptions import PasswordMissMatchException
 from decorators import is_authenticated
+
+from bson import ObjectId
 
 
 @is_authenticated()
 async def get_store_houses_handler(request):
     data = await StoreHouses.find(request.app['db'], {})
 
-    return data, 201
+    return data, 200
 
 
 @is_authenticated()
 async def create_store_house_handler(request):
-    data = await validators.create_user_request_validator(request)
+    data = await validators.create_storehouse_request_validator(request)
 
-    if data['password'] != data['confirm_password']:
-        raise PasswordMissMatchException()
-
-    del data['confirm_password']
-    data['password'] = hashlib.sha3_256(data['password'].encode('utf-8')).hexdigest()
-
-    await Users.insert(request.app['db'], data)
+    await StoreHouses.insert(request.app['db'], data)
 
     return {}, 201
 
 
 @is_authenticated()
 async def delete_store_house_handler(request):
-    data = await validators.create_user_request_validator(request)
+    data = await validators.delete_storehouse_request_validator(request)
 
-    if data['password'] != data['confirm_password']:
-        raise PasswordMissMatchException()
+    await StoreHouses.delete(request.app['db'], {'_id': ObjectId(data['storehouse_id'])})
 
-    del data['confirm_password']
-    data['password'] = hashlib.sha3_256(data['password'].encode('utf-8')).hexdigest()
-
-    await Users.insert(request.app['db'], data)
-
-    return {}, 201
+    return {}, 204

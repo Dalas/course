@@ -13,3 +13,13 @@ class PasswordMissMatchException(BaseApiException):
 class LoginException(BaseApiException):
     error = 'Invalid login or password.'
     status = 403
+
+
+class LoginRequiredException(BaseApiException):
+    error = 'Login required'
+    status = 403
+
+
+class ValidationError(BaseApiException):
+    error = 'Invalid json format.'
+    status = 400

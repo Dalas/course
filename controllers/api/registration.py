@@ -12,7 +12,7 @@ async def registration_handler(request):
         raise PasswordMissMatchException()
 
     del data['confirm_password']
-    data['password'] = hashlib.sha3_256(data['password'].encode('utf-8')).hexdigest()
+    data['password'] = hashlib.sha256(data['password'].encode('utf-8')).hexdigest()
 
     await Users.insert(request.app['db'], data)
 

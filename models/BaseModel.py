@@ -47,6 +47,12 @@ class BaseModel:
 
         await collection.update(query, document, **kwargs)
 
+    @classmethod
+    async def delete(cls, db, query, **kwargs):
+        collection = cls.collection(db)
+
+        await collection.delete_one(query, **kwargs)
+
     async def save(self, db):
         if not self._id:
             self._id = ObjectId()
