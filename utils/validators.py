@@ -56,3 +56,5 @@ create_storehouse_request_validator = functools.partial(validate, schema=schemas
 delete_storehouse_request_validator = functools.partial(validate, schema=schemas.delete_storehouse_request_schema)
 create_product_request_validator = functools.partial(validate, schema=schemas.create_product_request_schema)
 delete_product_request_validator = functools.partial(validate, schema=schemas.delete_product_request_schema)
+create_waybill_request_validator = functools.partial(validate, schema=schemas.create_waybill_request_schema)
+process_waybill_request_validator = functools.partial(validate, schema=schemas.process_waybill_request_schema)

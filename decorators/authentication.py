@@ -19,7 +19,7 @@ AVAILABLE_PATHS = {
 def is_authenticated(available_role=None):
     def method_wrapper(func):
         async def wrapper(request, *args, **kwargs):
-            token = request.headers.get('token', None)
+            token = request.headers.get('token', None) or request.cookies.get('token', None)
 
             if token:
                 db = request.app['db']

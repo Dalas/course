@@ -7,25 +7,6 @@ import ReactDOM from 'react-dom';
 import fetch from 'isomorphic-fetch';
 
 
-const roles = ["ROLE_ADMIN", "ROLE_STUDENT"];
-
-
-const usersSchema = {
-    title: "User",
-    type: "object",
-    required: ["firstName", "lastName", "username", "password", "email", "role", "cardToken"],
-    properties: {
-        firstName: {type: "string", title: "First Name"},
-        lastName: {type: "string", title: "Last Name"},
-        username: {type: "string", title: "Username"},
-        password: {type: "string", title: "Password"},
-        email: {type: "string", title: "E-mail"},
-        role: {type: "string", title: "Role", enum: roles},
-        cardToken: {type: "string", title: "cardToken"}
-    }
-};
-
-
 const USERS_SCHEMA = {
     login: '',
     password: ''
@@ -49,7 +30,7 @@ class UsersPage extends React.Component {
     }
 
     createUser(user) {
-        fetch('/api/user', {
+        fetch('/api/v1/user', {
             method: 'POST',
             credentials: 'same-origin',
             body: JSON.stringify( user )
@@ -59,17 +40,11 @@ class UsersPage extends React.Component {
             }
             else {
                 response.json().then(data => {
-                    console.log(data)
+                    console.log(data);
+                    window.location = '/login'
                 });
             }
         }).catch( error => console.log(error) )
-    }
-
-    selectUser(id) {
-        this.setState({
-            currentUser: { ...this.state.users[id] },
-            currentUserID: id
-        })
     }
 
     handleRegistration(event) {

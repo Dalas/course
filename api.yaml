@@ -242,8 +242,120 @@ paths:
           schema:
             $ref: '#/definitions/ApiErrorResponse'
 
-definitions:
+  /v1/waybills:
+    get:
+      tags:
+        - Waybill
+      description: |
+        Get all waybills
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Waybills list
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WaybillObject'
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+  /v1/waybill:
+    post:
+      tags:
+        - Waybill
+      description: |
+        Create waybill
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Product data
+          required: true
+          schema:
+            $ref: '#/definitions/CreateWaybillObject'
+      responses:
+        201:
+          description: Waybill successfully created
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+    delete:
+      tags:
+        - Waybill
+      description: |
+        Delete waybill
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/ProcessWaybillObject'
+      responses:
+        204:
+          description: Waybill successfully deleted
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+    put:
+      tags:
+        - Waybill
+      description: |
+        Process waybill
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/ProcessWaybillObject'
+      responses:
+        200:
+          description: Waybill successfully processed
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
 
+definitions:
   ApiError:
     required:
       - code
@@ -333,6 +445,51 @@ definitions:
       size:
         type: number
   DeleteProductObject:
+    required:
+      - product_id
+    properties:
+      product_id:
+        type: string
+
+  WaybillObject:
+    properties:
+      _id:
+        type: string
+      storehouse_id:
+        type: string
+      storehouse_title:
+        type: string
+      product_id:
+        type: string
+      product_title:
+        type: string
+      count:
+        type: number
+      action:
+        type: string
+  CreateWaybillObject:
+    required:
+      - storehouse_id
+      - storehouse_title
+      - product_id
+      - product_title
+      - count
+      - action
+    properties:
+      storehouse_id:
+        type: string
+      storehouse_title:
+        type: string
+      product_id:
+        type: string
+      product_title:
+        type: string
+      count:
+        type: number
+      action:
+        type: string
+        enum: [in, out, move]
+  ProcessWaybillObject:
     required:
       - product_id
     properties:

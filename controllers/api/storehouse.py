@@ -16,6 +16,8 @@ async def get_store_houses_handler(request):
 async def create_store_house_handler(request):
     data = await validators.create_storehouse_request_validator(request)
 
+    data['used_space'] = 0
+
     await StoreHouses.insert(request.app['db'], data)
 
     return {}, 201

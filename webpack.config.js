@@ -10,6 +10,7 @@ module.exports = {
     context: path.join(__dirname, "static/"),
     entry: {
         registrationPage: "./js/src/pages/registrationPage.js",
+        storehousesPage: "./js/src/pages/storehousesPage.js",
 
         styles_loader: "./js/src/pages/styles.loader.js",
         vendor: ['react', 'react-dom', 'isomorphic-fetch', 'redux', 'react-redux', 'lodash', 'react-jsonschema-form']
