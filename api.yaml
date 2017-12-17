@@ -157,6 +157,91 @@ paths:
           schema:
             $ref: '#/definitions/ApiErrorResponse'
 
+  /v1/products:
+    get:
+      tags:
+        - Product
+      description: |
+        Get all products
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Products list
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductObject'
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+  /v1/product:
+    post:
+      tags:
+        - Product
+      description: |
+        Create product
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Product data
+          required: true
+          schema:
+            $ref: '#/definitions/CreateProductObject'
+      responses:
+        201:
+          description: Product successfully created
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+    delete:
+      tags:
+        - Product
+      description: |
+        Delete product
+      parameters:
+        - in: header
+          name: 'token'
+          description: Authorization token
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Users data
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteProductObject'
+      responses:
+        204:
+          description: Storehouse successfully deleted
+        403:
+          description: Login required
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ApiErrorResponse'
+
 definitions:
 
   ApiError:
@@ -228,4 +313,28 @@ definitions:
       - storehouse_id
     properties:
       storehouse_id:
+        type: string
+
+  ProductObject:
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      size:
+        type: number
+  CreateProductObject:
+    required:
+      - title
+      - size
+    properties:
+      title:
+        type: string
+      size:
+        type: number
+  DeleteProductObject:
+    required:
+      - product_id
+    properties:
+      product_id:
         type: string

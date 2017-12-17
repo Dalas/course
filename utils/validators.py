@@ -54,3 +54,5 @@ create_user_request_validator = functools.partial(validate, schema=schemas.creat
 login_request_validator = functools.partial(validate, schema=schemas.login_request_schema)
 create_storehouse_request_validator = functools.partial(validate, schema=schemas.create_storehouse_request_schema)
 delete_storehouse_request_validator = functools.partial(validate, schema=schemas.delete_storehouse_request_schema)
+create_product_request_validator = functools.partial(validate, schema=schemas.create_product_request_schema)
+delete_product_request_validator = functools.partial(validate, schema=schemas.delete_product_request_schema)
