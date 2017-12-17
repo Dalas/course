@@ -8,13 +8,13 @@ import fetch from 'isomorphic-fetch';
 import Form from "react-jsonschema-form";
 
 
-const STOREHOUSE_SCHEMA = {
-    title: "Storehouse",
+const PRODUCT_SCHEMA = {
+    title: "Product",
     type: "object",
-    required: ["title", "capacity"],
+    required: ["title", "size"],
     properties: {
         title: {type: "string", title: "Title"},
-        capacity: {type: "number", title: "Capacity", minimum: 0},
+        size: {type: "number", title: "Size", minimum: 0},
     }
 };
 
@@ -35,7 +35,7 @@ class UsersPage extends React.Component {
     }
 
     fetchStorehouses() {
-        fetch('/api/v1/storehouses', {
+        fetch('/api/v1/products', {
             method: 'GET',
             credentials: 'same-origin'
         }).then( response => {
@@ -55,7 +55,7 @@ class UsersPage extends React.Component {
     handleSubmit(form) {
         let data = form.formData;
 
-        fetch('/api/v1/storehouse', {
+        fetch('/api/v1/product', {
             method: 'POST',
             credentials: 'same-origin',
             body: JSON.stringify(data)
@@ -79,22 +79,20 @@ class UsersPage extends React.Component {
                         <tr>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Capacity</th>
-                            <th>Used space</th>
+                            <th>Size</th>
                         </tr>
                         { this.state.storehouses.map((value, index) => {
                             return <tr key={ index }>
                                 <td>{ index + 1 }</td>
                                 <td>{ value.title }</td>
-                                <td>{ value.capacity }</td>
-                                <td>{ value.used_space }</td>
+                                <td>{ value.size }</td>
                             </tr>
                         }) }
                     </thead>
                 </table>
 
                 <div style={{ marginTop: `20vh` }}>
-                    <Form schema={ STOREHOUSE_SCHEMA } onSubmit={ this.handleSubmit } />
+                    <Form schema={ PRODUCT_SCHEMA } onSubmit={ this.handleSubmit } />
                 </div>
             </div>
         )

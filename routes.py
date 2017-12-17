@@ -6,6 +6,7 @@ def register_routes(app):
 
     app.router.add_get('/', web.main_handler, name='main-route')
     app.router.add_get('/storehouses', web.store_houses_handler, name='storehouses')
+    app.router.add_get('/products', web.products_handler, name='products')
 
     # Auth
     # Web

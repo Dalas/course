@@ -26,7 +26,7 @@ async def process_login(request):
 
     session = await Sessions.update_or_create_session(db, user['_id'])
 
-    response = HTTPFound('/test')
+    response = HTTPFound('/')
     response.set_cookie('token', session['token'])
 
     return response

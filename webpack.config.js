@@ -11,6 +11,7 @@ module.exports = {
     entry: {
         registrationPage: "./js/src/pages/registrationPage.js",
         storehousesPage: "./js/src/pages/storehousesPage.js",
+        productsPage: "./js/src/pages/productsPage.js",
 
         styles_loader: "./js/src/pages/styles.loader.js",
         vendor: ['react', 'react-dom', 'isomorphic-fetch', 'redux', 'react-redux', 'lodash', 'react-jsonschema-form']
