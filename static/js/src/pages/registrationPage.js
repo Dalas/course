@@ -13,7 +13,7 @@ const USERS_SCHEMA = {
 };
 
 
-class UsersPage extends React.Component {
+class RegistrartionPage extends React.Component {
     constructor( props ) {
         super(props);
 

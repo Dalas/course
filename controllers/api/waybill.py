@@ -6,7 +6,7 @@ from bson import ObjectId
 
 
 @is_authenticated()
-async def get_waybill_handler(request):
+async def get_waybills_handler(request):
     data = await Waybill.find(request.app['db'], {})
 
     return data, 200

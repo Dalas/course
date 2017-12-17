@@ -19,22 +19,22 @@ const PRODUCT_SCHEMA = {
 };
 
 
-class UsersPage extends React.Component {
+class ProductsPage extends React.Component {
     constructor( props ) {
         super(props);
 
-        this.fetchStorehouses = this.fetchStorehouses.bind(this);
+        this.fetchProducts = this.fetchProducts.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
-            storehouses: [],
+            products: [],
             fetching: true
         };
 
-        this.fetchStorehouses()
+        this.fetchProducts()
     }
 
-    fetchStorehouses() {
+    fetchProducts() {
         fetch('/api/v1/products', {
             method: 'GET',
             credentials: 'same-origin'
@@ -45,7 +45,7 @@ class UsersPage extends React.Component {
             else {
                 response.json().then(data => {
                     this.setState({
-                        storehouses: data.data
+                        products: data.data
                     });
                 });
             }
@@ -65,7 +65,7 @@ class UsersPage extends React.Component {
             }
             else {
                 response.json().then(data => {
-                    this.fetchStorehouses()
+                    this.fetchProducts()
                 });
             }
         }).catch( error => console.log(error) )
@@ -81,7 +81,7 @@ class UsersPage extends React.Component {
                             <th>Title</th>
                             <th>Size</th>
                         </tr>
-                        { this.state.storehouses.map((value, index) => {
+                        { this.state.products.map((value, index) => {
                             return <tr key={ index }>
                                 <td>{ index + 1 }</td>
                                 <td>{ value.title }</td>
@@ -99,4 +99,4 @@ class UsersPage extends React.Component {
     }
 }
 
-ReactDOM.render(<UsersPage />, document.getElementById('container'));
+ReactDOM.render(<ProductsPage />, document.getElementById('container'));

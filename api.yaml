@@ -488,7 +488,7 @@ definitions:
         type: number
       action:
         type: string
-        enum: [in, out, move]
+        enum: [IN, OUT, MOVE]
   ProcessWaybillObject:
     required:
       - product_id

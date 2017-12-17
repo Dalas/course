@@ -19,7 +19,7 @@ const STOREHOUSE_SCHEMA = {
 };
 
 
-class UsersPage extends React.Component {
+class StorehousesPage extends React.Component {
     constructor( props ) {
         super(props);
 
@@ -101,4 +101,4 @@ class UsersPage extends React.Component {
     }
 }
 
-ReactDOM.render(<UsersPage />, document.getElementById('container'));
+ReactDOM.render(<StorehousesPage />, document.getElementById('container'));
